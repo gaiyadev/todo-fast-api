@@ -7,6 +7,10 @@ class User(BaseModel):
     password: str
 
 
+class Todo(BaseModel):
+    title: str
+
+
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -14,3 +18,4 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: Union[str, None] = None
+    id: int
