@@ -1,14 +1,15 @@
-from pydantic import BaseModel
+from fastapi import Query
+from pydantic import BaseModel, Required, EmailStr, validator
 from typing import Union
 
 
 class User(BaseModel):
-    email: str
-    password: str
+    email: Union[str, None] = Query(default=Required)
+    password: Union[str, None] = Query(default=Required, min_length=4)
 
 
 class Todo(BaseModel):
-    title: str
+    title: Union[str, None] = Query(default=Required, min_length=2)
 
 
 class Token(BaseModel):

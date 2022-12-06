@@ -1,5 +1,6 @@
+
 from fastapi import Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from starlette import status
 from app import models, schema
 from app.database import get_db
@@ -33,12 +34,12 @@ def create(request: schema.Todo, response, db: Session = Depends(get_db),
 
 
 def fetch_todos(db: Session):
-    todos = db.query(models.Todo).all()
+    todos = db.query(models.Todo).options(joinedload(models.Todo.user)).order_by(models.Todo.id.desc()) .all()
     return todos
 
 
 def show(post_id: int, response, db: Session = Depends(get_db)):
-    todo: models.Todo = db.query(models.Todo).filter(models.Todo.id == post_id).first()
+    todo = db.query(models.Todo).options(joinedload(models.Todo.user)).filter(models.Todo.id == post_id) .first()
     if not todo:
         response.status_code = status.HTTP_404_NOT_FOUND
         return {
