@@ -70,7 +70,7 @@ def show(user_id: int, response, db: Session = Depends(get_db)):
         return {
             'message': "Not found",
             'status_code': 404,
-            'error': 'NOT_FOUND'
+            'error': 'NOT FOUND'
         }
     return {
         'message': "success",
